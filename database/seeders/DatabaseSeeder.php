@@ -14,6 +14,7 @@ class DatabaseSeeder extends Seeder
         $this->call([
             UserSeeder::class,
             ChannelSeeder::class,
+            PlayListSeeder::class,
             VideoSeeder::class,
             CategorySeeder::class,
             CategoryVideoSeeder::class,
