@@ -7,7 +7,7 @@ use Illuminate\Support\Carbon;
 enum Period: string
 {
     case Year = 'year';
-    case Month = 'mouth';
+    case Month = 'month';
     case Week = 'week';
     case Day = 'day';
     case Hour = 'hour';
