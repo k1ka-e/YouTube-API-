@@ -11,7 +11,8 @@ class UserController extends Controller
         return User::with(request('with', []))
             ->search(request('query'))
             ->orderBy(request('sort', 'name'), request('order', 'asc'))
-            ->simplePaginate(request('limit'));    }
+            ->simplePaginate(request('limit'));
+    }
 
     public function show(User $user)
     {
