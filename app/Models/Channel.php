@@ -14,6 +14,11 @@ class Channel extends Model
         return $this->hasMany(Video::class);
     }
 
+    public function playlists()
+    {
+        return $this->hasMany(PlayList::class);
+    }
+
     public function user()
     {
         return $this->belongsTo(User::class);
