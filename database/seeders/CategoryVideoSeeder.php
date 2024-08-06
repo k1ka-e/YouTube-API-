@@ -14,51 +14,21 @@ class CategoryVideoSeeder extends Seeder
     /**
      * Run the database seeds.
      */
-    //    public function run(): void
-    //    {
-    //        $categoryIds = Category::pluck('id')->all();
-    //        $videoIds = Video::pluck('id')->all();
-    //
-    //        $categoryVideo = [];
-    //
-    //        foreach ($categoryIds as $categoryId) {
-    //            $randomVideoIds = Arr::random($videoIds, mt_rand(1, count($videoIds)));
-    //
-    //            foreach ($randomVideoIds as $videoId) {
-    //                $categoryVideo[] = [
-    //                    'category_id' => $categoryId,
-    //                    'video_id' => $videoId,
-    //                ];
-    //            }
-    //        }
-    //
-    //        DB::table('category_video')->insert($categoryVideo);
-    //    }
 
     public function run(): void
     {
-        $categoryIds = Category::pluck('id');
-        $videoIds = Video::pluck('id');
+        $videos = Video::get();
 
-        $categoryVideo = $categoryIds->flatMap(
-            fn (int $id) => $this->categoryVideos($id, $this->randomVideoIds($videoIds))
+        Category::get()->flatMap(
+            fn (Category $category) => $category->videos()->saveMany($this->randomVideos($videos))
         );
 
-        DB::table('category_video')->insert($categoryVideo->all());
 
     }
 
-    private function categoryVideos(int $categoryId, Collection $videoIds): Collection
-    {
 
-        return $videoIds->map(fn (int $id) => [
-            'category_id' => $categoryId,
-            'video_id' => $id,
-        ]);
-    }
-
-    private function randomVideoIds(Collection $ids): Collection
+    private function randomVideos(Collection $videos): Collection
     {
-        return $ids->random(mt_rand(1, count($ids)));
+        return $videos->random(mt_rand(1, count($videos)));
     }
 }
