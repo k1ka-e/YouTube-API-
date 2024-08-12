@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Traits\WithRelationships;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -10,7 +11,7 @@ use Laravel\Sanctum\HasApiTokens;
 
 class User extends Authenticatable
 {
-    use HasApiTokens, HasFactory, Notifiable;
+    use HasApiTokens, HasFactory, Notifiable, WithRelationships;
 
     protected static $relationships = ['channel'];
 
@@ -45,12 +46,6 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
         'password' => 'hashed',
     ];
-
-
-    public function scopeWithRelationships($query, array|string $with)
-    {
-        return $query->with(array_intersect(Arr::wrap($with), static::$relationships));
-    }
 
     public function channel()
     {
