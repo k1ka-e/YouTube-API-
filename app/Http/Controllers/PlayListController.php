@@ -8,7 +8,7 @@ class PlayListController extends Controller
 {
     public function index()
     {
-        return PlayList::with(request('with', []))
+        return PlayList::withRelationships(request('with', []))
             ->search(request('query'))
             ->orderBy(request('sort', 'name'), request('order', 'asc'))
             ->simplePaginate(request('limit'));

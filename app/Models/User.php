@@ -5,11 +5,15 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Support\Arr;
 use Laravel\Sanctum\HasApiTokens;
 
 class User extends Authenticatable
 {
     use HasApiTokens, HasFactory, Notifiable;
+
+    protected static $relationships = ['channel'];
+
 
     /**
      * The attributes that are mass assignable.
@@ -41,6 +45,12 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
         'password' => 'hashed',
     ];
+
+
+    public function scopeWithRelationships($query, array|string $with)
+    {
+        return $query->with(array_intersect(Arr::wrap($with), static::$relationships));
+    }
 
     public function channel()
     {

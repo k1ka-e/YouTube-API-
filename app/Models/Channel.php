@@ -3,11 +3,13 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Model;
 
 class Channel extends Model
 {
     use HasFactory;
+
+    protected static $relationships = ['videos', 'playlists', 'user'];
+
 
     public function videos()
     {
@@ -28,4 +30,5 @@ class Channel extends Model
     {
         return $query->where('name', 'like', '%' . "%$name%");
     }
+
 }
