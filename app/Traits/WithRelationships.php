@@ -7,7 +7,7 @@ use Illuminate\Support\Arr;
 trait WithRelationships
 {
 
-    public function scopeWithRelationships($query, array|string $relationships)
+    public function scopeWithRelationships($query, $relationships)
     {
         return $query->with($this->validRelationship($relationships));
     }

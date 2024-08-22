@@ -27,3 +27,6 @@ Route::get('/playlists/{playlist}', [\App\Http\Controllers\PlayListController::c
 
 Route::get('/videos', [\App\Http\Controllers\VideoController::class, 'index']);
 Route::get('/videos/{video}', [\App\Http\Controllers\VideoController::class, 'show']);
+
+Route::get('/comments', [\App\Http\Controllers\CommentController::class, 'index']);
+Route::get('/comments/{comment}', [\App\Http\Controllers\CommentController::class, 'show']);
