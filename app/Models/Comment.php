@@ -16,6 +16,12 @@ class Comment extends Model
         return $this->belongsTo(static::class);
     }
 
+    public function replies()
+    {
+        return $this->hasMany(static::class, 'parent_id');
+    }
+
+
     public function user()
     {
         return $this->belongsTo(User::class);
