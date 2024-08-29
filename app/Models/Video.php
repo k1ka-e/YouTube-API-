@@ -45,8 +45,8 @@ class Video extends Model
         });
     }
 
-    public function createRandomComments()
-    {
-        return Comment::factory(10)->create(['video_id' => $this->id]);;
-    }
+//    public function createRandomComments()
+//    {
+//        return Comment::factory(10)->create(['video_id' => $this->id]);;
+//    }
 }
