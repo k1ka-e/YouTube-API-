@@ -31,4 +31,20 @@ class Comment extends Model
     {
         return $this->belongsTo(Video::class);
     }
+
+    private function findRandomToMakeParent()
+    {
+        return $this->video
+            ->comments()
+            ->doesntHave('parent')
+            ->where('id', '<>', $this->id)
+            ->inRandomOrder()
+            ->first();
+    }
+
+    public function associateParentComment()
+    {
+        if ($this->replies()->exists()) return;
+        $this->parent()->associate($this->findRandomToMakeParent())->save();
+    }
 }
