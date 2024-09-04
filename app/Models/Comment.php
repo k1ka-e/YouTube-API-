@@ -9,6 +9,8 @@ class Comment extends Model
 {
     use HasFactory;
 
+    protected $guarded = [];
+
     protected static $relationships = ['parent', 'user', 'video'];
 
     public function parent()

@@ -24,5 +24,8 @@ class AppServiceProvider extends ServiceProvider
         DB::listen(function ($query) {
             Log::info($query->sql);
         });
+
+        auth()->loginUsingId(1);
+
     }
 }
