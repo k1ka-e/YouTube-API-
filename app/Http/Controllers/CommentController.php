@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\Comment;
+use Illuminate\Auth\AuthenticationException;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 
 class CommentController extends Controller
 {
@@ -38,6 +40,9 @@ class CommentController extends Controller
 
     public function update(Comment $comment, Request $request)
     {
+        //authorize
+        throw_if($request->user()->isNot($comment->user), AuthenticationException::class);
+
         $attributes = $request->validate([
             'text' => 'required|string'
         ]);
