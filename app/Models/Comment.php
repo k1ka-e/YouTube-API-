@@ -15,13 +15,13 @@ class Comment extends Model
 
     protected static function booted()
     {
-       static::saving(function (Comment $comment) {
-           $comment->user_id = $comment->user_id ?: auth()->id();
+        static::saving(function (Comment $comment) {
+            $comment->user_id = $comment->user_id ?: auth()->id();
 
-           if ($comment->parent_id) {
-               $attributes['video_id'] = Comment::find($comment->parent_id)->video_id;
-           }
-       });
+            if ($comment->parent_id) {
+                $attributes['video_id'] = Comment::find($comment->parent_id)->video_id;
+            }
+        });
     }
 
     public function parent()
@@ -38,6 +38,11 @@ class Comment extends Model
     public function video()
     {
         return $this->belongsTo(Video::class);
+    }
+
+    public function isOwnedBy(User $user)
+    {
+        return $this->user_id === $user->id;
     }
 
 
