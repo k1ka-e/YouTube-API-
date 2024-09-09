@@ -2,8 +2,8 @@
 
 namespace App\Models;
 
+use App\Enums\Period;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Model;
 
 class Comment extends Model
 {
@@ -11,7 +11,7 @@ class Comment extends Model
 
     protected $guarded = [];
 
-    protected static $relationships = ['parent', 'user', 'video'];
+    protected static $relationships = ['user', 'video'];
 
     protected static function booted()
     {
@@ -38,6 +38,16 @@ class Comment extends Model
     public function video()
     {
         return $this->belongsTo(Video::class);
+    }
+
+    public function scopeFromPeriod($query, ?Period $period)
+    {
+        return $period ? $query->where('created_at', '>', $period->date()) : $query;
+    }
+
+    public function scopeSearch($query, ?string $text)
+    {
+        return $query->where('text', 'like', '%' . "%$text%");
     }
 
     public function isOwnedBy(User $user)
