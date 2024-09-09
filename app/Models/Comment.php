@@ -11,7 +11,7 @@ class Comment extends Model
 
     protected $guarded = [];
 
-    protected static $relationships = ['parent', 'user', 'video'];
+//    protected static $relationships = ['parent', 'user', 'video'];
 
     public function parent()
     {

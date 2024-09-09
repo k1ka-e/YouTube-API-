@@ -49,4 +49,12 @@ class CommentController extends Controller
 
         $comment->fill($attributes)->save();
     }
+
+    public function destroy(Comment $comment, Request $request)
+    {
+        //authorize
+        throw_if($request->user()->isNot($comment->user), AuthenticationException::class);
+
+        $comment->delete();
+    }
 }
