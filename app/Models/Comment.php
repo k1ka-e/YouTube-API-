@@ -11,7 +11,18 @@ class Comment extends Model
 
     protected $guarded = [];
 
-//    protected static $relationships = ['parent', 'user', 'video'];
+    protected static $relationships = ['parent', 'user', 'video'];
+
+    protected static function booted()
+    {
+       static::saving(function (Comment $comment) {
+           $comment->user_id = $comment->user_id ?: auth()->id();
+
+           if ($comment->parent_id) {
+               $attributes['video_id'] = Comment::find($comment->parent_id)->video_id;
+           }
+       });
+    }
 
     public function parent()
     {
