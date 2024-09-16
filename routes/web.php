@@ -19,4 +19,5 @@ Route::get('/', function () {
 
 Route::post('/register', [\App\Http\Controllers\Auth\RegisterUserController::class, 'store'])->middleware('guest');
 Route::post('/login', [\App\Http\Controllers\Auth\AuthenticatedSessionController::class, 'store'])->middleware('guest');
+Route::delete('/logout', [\App\Http\Controllers\Auth\AuthenticatedSessionController::class, 'destroy'])->middleware('auth');
 
