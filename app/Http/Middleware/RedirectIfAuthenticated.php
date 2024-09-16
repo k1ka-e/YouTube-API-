@@ -21,7 +21,9 @@ class RedirectIfAuthenticated
 
         foreach ($guards as $guard) {
             if (Auth::guard($guard)->check()) {
-                return redirect(RouteServiceProvider::HOME);
+                return \response([
+                   'message' => 'You are already authenticated.'
+                ], \Illuminate\Http\Response::HTTP_UNPROCESSABLE_ENTITY);
             }
         }
 
