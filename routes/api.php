@@ -32,6 +32,9 @@ Route::get('/comments', [\App\Http\Controllers\CommentController::class, 'index'
 Route::get('/comments/{comment}', [\App\Http\Controllers\CommentController::class, 'show']);
 
 Route::middleware('auth:sanctum')->group(function () {
+    Route::get('/profile', [\App\Http\Controllers\Auth\ProfileController::class, 'show']);
+    Route::put('/profile', [\App\Http\Controllers\Auth\ProfileController::class, 'update']);
+
     Route::post('/comments', [\App\Http\Controllers\CommentController::class, 'store']);
     Route::put('/comments/{comment}', [\App\Http\Controllers\CommentController::class, 'update'])->middleware('ability:comment:update');
     Route::delete('/comments/{comment}', [\App\Http\Controllers\CommentController::class, 'destroy'])->middleware('ability:comment:delete');
