@@ -23,3 +23,6 @@ Route::delete('/delete-account', [\App\Http\Controllers\Auth\RegisterUserControl
 Route::post('/login', [\App\Http\Controllers\Auth\AuthenticatedSessionController::class, 'store'])->middleware('guest');
 Route::delete('/logout', [\App\Http\Controllers\Auth\AuthenticatedSessionController::class, 'destroy'])->middleware('auth');
 
+Route::post('/email/verification-notification', [\App\Http\Controllers\Auth\EmailVerificationNotificationController::class, 'store'])->middleware('auth');
+Route::get('/verify-email/{id}/{hash}', [\App\Http\Controllers\Auth\VerifyEmailController::class])->middleware('auth')->name('verification.verify');
+
