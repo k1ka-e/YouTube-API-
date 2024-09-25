@@ -52,7 +52,7 @@ class User extends Authenticatable implements MustVerifyEmail
 
     protected static function booted()
     {
-        static::deleting(fn (User $user) => $user->tokens()->delete());
+        static::deleting(fn(User $user) => $user->tokens()->delete());
     }
 
     public function password(): Attribute
@@ -75,8 +75,19 @@ class User extends Authenticatable implements MustVerifyEmail
     public function scopeSearch($query, ?string $text)
     {
         return $query->where(function ($query) use ($text) {
-            $query->where('name', 'like', '%'."%$text%")
-                ->orWhere('email', 'like', '%'."%$text%");
+            $query->where('name', 'like', '%' . "%$text%")
+                ->orWhere('email', 'like', '%' . "%$text%");
         });
+    }
+
+    public function sendPasswordResetNotification($token): void
+    {
+        $url = url(route('password.reset', [
+            'token' => $token,
+            'email' => $this->getEmailForPassword(),
+        ], false));
+
+
+        $this->notify(new ResetPasswordNotification($url));
     }
 }
