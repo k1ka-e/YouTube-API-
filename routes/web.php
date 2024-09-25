@@ -30,3 +30,10 @@ Route::get('/verify-email/{id}/{hash}', [\App\Http\Controllers\Auth\VerifyEmailC
     ->middleware(['auth', 'signed', 'throttle:6,1'])
     ->name('verification.verify');
 
+Route::get('/forgot-password', [\App\Http\Controllers\Auth\PasswordResetLinkController::class, 'store'])
+    ->middleware('guest');
+
+Route::get('/reset-password', [\App\Http\Controllers\Auth\NewPasswordController::class, 'store'])
+    ->middleware('guest')
+    ->name('password.reset');
+
